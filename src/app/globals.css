@@ -1,0 +1,296 @@
+@import "tailwindcss";
+
+:root {
+  --background: #10130f;
+  --foreground: #ece8e1;
+  --muted: #9a958c;
+  --surface: #1a1f19;
+  --surface-2: #232a21;
+  --line: rgba(236, 232, 225, 0.12);
+  --accent: #6b7e45;
+  --accent-soft: #98a86e;
+  --steel: #6d7f88;
+  --concrete: #b8b0a4;
+  --on-accent: #1a1508;
+  --grain-top: color-mix(in oklab, var(--accent) 16%, transparent);
+  --grain-side: rgba(109, 127, 136, 0.12);
+  --grain-base: linear-gradient(180deg, #121610 0%, #0e110d 45%, #151a14 100%);
+  --grid-line: rgba(236, 232, 225, 0.04);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-steel: var(--steel);
+  --color-concrete: var(--concrete);
+  --color-on-accent: var(--on-accent);
+  --font-sans: var(--font-dm-sans);
+  --font-display: var(--font-display);
+  --font-heading: var(--font-outfit);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  min-height: 100%;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--accent) 55%, transparent);
+  color: #111;
+}
+
+.site-grain {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, var(--grain-top), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 100% 20%, var(--grain-side), transparent 50%),
+    var(--grain-base);
+}
+
+.section-pad {
+  padding-inline: clamp(1.25rem, 6vw, 5rem);
+}
+
+.display-title {
+  font-family: var(--font-display), var(--font-heading), serif;
+  letter-spacing: 0.02em;
+}
+
+.heading-font {
+  font-family: var(--font-heading), var(--font-sans), sans-serif;
+}
+
+.blueprint-grid {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.faq-item summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+/* ——— Unique image hover styles ——— */
+.media-frame {
+  isolation: isolate;
+  position: relative;
+}
+
+.media-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.media-stage,
+.media-img {
+  height: 100%;
+  width: 100%;
+}
+
+.media-img {
+  transition:
+    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.7s ease,
+    opacity 0.7s ease;
+  will-change: transform, filter;
+}
+
+.media-veil,
+.media-accent,
+.media-shine {
+  transition: opacity 0.55s ease, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), clip-path 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.media-caption {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72), transparent);
+  transform: translateY(10px);
+  opacity: 0.75;
+  transition: transform 0.55s ease, opacity 0.55s ease;
+}
+
+.media-frame:hover .media-caption {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* 1) Ken Burns slow pan-zoom */
+.media-kenburns .media-veil {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.45), transparent 55%);
+  opacity: 0.55;
+}
+.media-kenburns:hover .media-img {
+  transform: scale(1.16) translate(-2%, -1%);
+}
+.media-kenburns:hover .media-veil {
+  opacity: 0.75;
+}
+
+/* 2) 3D tilt + parallax feel */
+.media-tilt {
+  transform-style: preserve-3d;
+  transition: transform 0.45s ease, box-shadow 0.45s ease;
+}
+.media-tilt .media-veil {
+  background: linear-gradient(135deg, transparent 40%, rgba(0, 0, 0, 0.35));
+  opacity: 0.35;
+}
+.media-tilt:hover {
+  transform: perspective(900px) rotateX(4deg) rotateY(-5deg) scale(1.01);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+}
+.media-tilt:hover .media-img {
+  transform: scale(1.08) translateZ(20px);
+}
+
+/* 3) Diagonal wipe reveal */
+.media-wipe .media-accent {
+  background: color-mix(in oklab, var(--accent) 55%, transparent);
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  mix-blend-mode: soft-light;
+  opacity: 0.9;
+}
+.media-wipe .media-veil {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+  opacity: 0.4;
+}
+.media-wipe:hover .media-accent {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+.media-wipe:hover .media-img {
+  transform: scale(1.06);
+  filter: saturate(1.15);
+}
+
+/* 4) Duotone accent wash */
+.media-duotone .media-img {
+  filter: grayscale(0.35) contrast(1.05);
+}
+.media-duotone .media-accent {
+  background: color-mix(in oklab, var(--accent) 70%, #1a1f19);
+  mix-blend-mode: color;
+  opacity: 0;
+}
+.media-duotone .media-veil {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent);
+  opacity: 0.45;
+}
+.media-duotone:hover .media-accent {
+  opacity: 0.55;
+}
+.media-duotone:hover .media-img {
+  transform: scale(1.07);
+  filter: grayscale(0) contrast(1.1);
+}
+
+/* 5) Iris / circle open */
+.media-iris .media-accent {
+  background: radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.55) 36%);
+  opacity: 1;
+}
+.media-iris .media-veil {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+  opacity: 0.35;
+}
+.media-iris:hover .media-accent {
+  background: radial-gradient(circle at center, transparent 72%, rgba(0, 0, 0, 0.2) 73%);
+}
+.media-iris:hover .media-img {
+  transform: scale(1.12);
+}
+
+/* 6) Slide-up curtain */
+.media-slide-up .media-accent {
+  background: color-mix(in oklab, var(--surface) 92%, var(--accent));
+  transform: translateY(100%);
+  opacity: 0.92;
+}
+.media-slide-up .media-veil {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+  opacity: 0.4;
+}
+.media-slide-up:hover .media-accent {
+  transform: translateY(62%);
+}
+.media-slide-up:hover .media-img {
+  transform: scale(1.08) translateY(-4%);
+}
+
+/* 7) Glow frame + shine sweep */
+.media-glow-frame {
+  transition: border-color 0.4s ease, box-shadow 0.5s ease;
+}
+.media-glow-frame .media-shine {
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.28) 48%,
+    transparent 62%
+  );
+  transform: translateX(-120%);
+  opacity: 0;
+}
+.media-glow-frame .media-veil {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.45), transparent);
+  opacity: 0.4;
+}
+.media-glow-frame:hover {
+  border-color: color-mix(in oklab, var(--accent) 65%, var(--line));
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 35%, transparent),
+    0 12px 36px color-mix(in oklab, var(--accent) 18%, transparent);
+}
+.media-glow-frame:hover .media-shine {
+  transform: translateX(120%);
+  opacity: 1;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+}
+.media-glow-frame:hover .media-img {
+  transform: scale(1.05);
+}
+
+/* 8) Blueprint grid overlay */
+.media-blueprint .media-accent {
+  background-image:
+    linear-gradient(rgba(236, 232, 225, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(236, 232, 225, 0.18) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0;
+  mix-blend-mode: overlay;
+}
+.media-blueprint .media-veil {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent 50%);
+  opacity: 0.45;
+}
+.media-blueprint:hover .media-accent {
+  opacity: 0.85;
+}
+.media-blueprint:hover .media-img {
+  transform: scale(1.06);
+  filter: contrast(1.08) saturate(0.85);
+}
+.media-blueprint:hover .media-veil {
+  opacity: 0.65;
+}
+
