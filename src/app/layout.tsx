@@ -99,12 +99,11 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
       </head>
       <body className="flex min-h-full flex-col font-sans">
-        <h1>hello</h1>
-        {/* <ThemeProvider>
+ <ThemeProvider>
           <Navbar />
           <div className="flex-1">{children}</div>
           <Footer />
-        </ThemeProvider> */}
+        </ThemeProvider> 
       </body>
     </html>
   );
