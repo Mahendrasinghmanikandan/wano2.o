@@ -77,7 +77,7 @@ export default function RootLayout({
             margin-bottom: 36px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
-            background: rgba(255, 255, 255, 0.035);
+            background: white;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
             backdrop-filter: blur(10px);
           }
@@ -86,6 +86,7 @@ export default function RootLayout({
             width: 100%;
             height: auto;
             object-fit: contain;
+            
           }
 
           .badge {
