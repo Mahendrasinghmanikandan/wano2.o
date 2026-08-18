@@ -6,14 +6,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${dmSans.variable} ${outfit.variable} ${displayFont.variable} h-full antialiased`}
+      className="h-full antialiased"
       suppressHydrationWarning
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
       </head>
 
-      <body className="flex min-h-full flex-col font-sans">
+      <body className="flex min-h-full flex-col">
         <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[var(--background)] px-6 text-[var(--foreground)]">
           {/* Background decoration */}
           <div className="pointer-events-none absolute inset-0">
@@ -39,7 +39,7 @@ export default function RootLayout({
                 Launching Soon
               </p>
 
-              <h1 className="font-display text-5xl font-semibold tracking-tight sm:text-6xl md:text-7xl">
+              <h1 className="text-5xl font-semibold tracking-tight sm:text-6xl md:text-7xl">
                 We're building
                 <br />
                 <span className="text-[var(--accent)]">
