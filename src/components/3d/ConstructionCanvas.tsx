@@ -16,7 +16,7 @@ import {
   type MutableRefObject,
   type ReactNode,
 } from "react";
-import { MathUtils } from "three";
+import { MathUtils, PerspectiveCamera } from "three";
 import Villa from "@/components/3d/Villa";
 
 export type HouseView =
@@ -116,7 +116,7 @@ function CameraRig({
   scrollProgress: MutableRefObject<number>;
   interactive: boolean;
 }) {
-  const { camera } = useThree();
+  const camera = useThree((state) => state.camera) as PerspectiveCamera;
   const target = useRef({ x: LOOK_OFFSET[0], y: LOOK_OFFSET[1], z: LOOK_OFFSET[2] });
   const idle = useRef(0);
   const { azimuth, dragging } = useDragAzimuth(interactive);
@@ -155,15 +155,14 @@ function CameraRig({
 
   useFrame((_, delta) => {
     const p = scrollProgress.current;
-    const preset = presets[view];
 
     if (!dragging.current && view === "orbit") {
       idle.current += delta * 0.1;
     }
 
     let goal = { x: 5.4, y: 2.4, z: 5.8 };
-    let look = { x: preset.look[0], y: preset.look[1], z: preset.look[2] };
-    let fov = preset.fov;
+    let look = { x: LOOK_OFFSET[0], y: LOOK_OFFSET[1], z: LOOK_OFFSET[2] };
+    let fov = presets.orbit.fov;
 
     if (view === "orbit") {
       const angle = 0.72 + p * Math.PI * 1.45 + azimuth.current + idle.current;
@@ -181,6 +180,9 @@ function CameraRig({
       };
       fov = MathUtils.lerp(36, 30, p);
     } else {
+      const preset = presets[view];
+      look = { x: preset.look[0], y: preset.look[1], z: preset.look[2] };
+      fov = preset.fov;
       const [px, py, pz] = preset.pos;
       const dx = px - look.x;
       const dz = pz - look.z;
