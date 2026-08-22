@@ -4,357 +4,363 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
   ContactShadows,
   Environment,
-  Float,
+  Html,
   Lightformer,
-  MeshReflectorMaterial,
-  PresentationControls,
 } from "@react-three/drei";
 import {
   Suspense,
+  Component,
   useEffect,
   useMemo,
   useRef,
-  useState,
   type MutableRefObject,
+  type ReactNode,
 } from "react";
-import {
-  Color,
-  MathUtils,
-  MeshStandardMaterial,
-} from "three";
+import { MathUtils } from "three";
+import Villa from "@/components/3d/Villa";
 
-export type HouseView = "orbit" | "front" | "side" | "aerial";
+export type HouseView =
+  | "orbit"
+  | "entry"
+  | "living"
+  | "garden"
+  | "terrace"
+  | "aerial";
+
+export type TimeOfDay = "day" | "dusk";
 
 type SceneProps = {
   accent: string;
   mode: "dark" | "light";
   view: HouseView;
+  timeOfDay: TimeOfDay;
   scrollProgress: MutableRefObject<number>;
   interactive: boolean;
+  onSelectView?: (view: HouseView) => void;
 };
 
-function Glass({
-  args,
-  position,
-  rotation = [0, 0, 0],
-  accent,
-}: {
-  args: [number, number, number];
-  position: [number, number, number];
-  rotation?: [number, number, number];
-  accent: string;
-}) {
-  return (
-    <mesh position={position} rotation={rotation} castShadow>
-      <boxGeometry args={args} />
-      <meshPhysicalMaterial
-        color={accent}
-        transmission={0.92}
-        thickness={0.35}
-        roughness={0.08}
-        metalness={0.05}
-        ior={1.45}
-        envMapIntensity={1.4}
-        transparent
-        opacity={0.85}
-      />
-    </mesh>
-  );
+const LOOK_OFFSET: [number, number, number] = [1.75, 1.55, 0.2];
+
+class SceneErrorBoundary extends Component<
+  { children: ReactNode },
+  { message: string | null }
+> {
+  state = { message: null as string | null };
+  static getDerivedStateFromError(error: Error) {
+    return { message: error?.message || "Scene failed to render" };
+  }
+  render() {
+    if (this.state.message) {
+      return (
+        <div className="flex h-full items-center justify-center px-6 text-sm text-concrete">
+          {this.state.message}
+        </div>
+      );
+    }
+    return this.props.children;
+  }
 }
 
-function ModernVilla({ accent }: { accent: string }) {
-  const white = "#f2efe8";
-  const concrete = "#cfc7bb";
-  const dark = "#2c2a27";
-  const wood = "#8b6b4a";
+function useDragAzimuth(enabled: boolean) {
+  const azimuth = useRef(0);
+  const dragging = useRef(false);
+  const lastX = useRef(0);
+  const { gl } = useThree();
 
-  const wallMat = useMemo(
-    () =>
-      new MeshStandardMaterial({
-        color: new Color(white),
-        roughness: 0.72,
-        metalness: 0.04,
-      }),
-    [white],
-  );
-  const concreteMat = useMemo(
-    () =>
-      new MeshStandardMaterial({
-        color: new Color(concrete),
-        roughness: 0.88,
-        metalness: 0.02,
-      }),
-    [concrete],
-  );
-  const darkMat = useMemo(
-    () =>
-      new MeshStandardMaterial({
-        color: new Color(dark),
-        roughness: 0.45,
-        metalness: 0.25,
-      }),
-    [dark],
-  );
-  const woodMat = useMemo(
-    () =>
-      new MeshStandardMaterial({
-        color: new Color(wood),
-        roughness: 0.65,
-        metalness: 0.05,
-      }),
-    [wood],
-  );
+  useEffect(() => {
+    const el = gl.domElement;
+    el.style.cursor = enabled ? "grab" : "default";
+    if (!enabled) return;
 
-  useEffect(
-    () => () => {
-      wallMat.dispose();
-      concreteMat.dispose();
-      darkMat.dispose();
-      woodMat.dispose();
-    },
-    [wallMat, concreteMat, darkMat, woodMat],
-  );
+    const down = (event: PointerEvent) => {
+      dragging.current = true;
+      lastX.current = event.clientX;
+      el.style.cursor = "grabbing";
+      el.setPointerCapture(event.pointerId);
+    };
+    const move = (event: PointerEvent) => {
+      if (!dragging.current) return;
+      azimuth.current += (event.clientX - lastX.current) * 0.0048;
+      lastX.current = event.clientX;
+    };
+    const up = (event: PointerEvent) => {
+      dragging.current = false;
+      el.style.cursor = "grab";
+      try {
+        el.releasePointerCapture(event.pointerId);
+      } catch {
+        /* already released */
+      }
+    };
 
-  return (
-    <group position={[0, 0, 0]}>
-      {/* ground slab */}
-      <mesh position={[0, -0.04, 0]} receiveShadow>
-        <boxGeometry args={[9.5, 0.08, 7.5]} />
-        <primitive object={concreteMat} attach="material" />
-      </mesh>
+    el.addEventListener("pointerdown", down);
+    el.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", up);
+    return () => {
+      el.removeEventListener("pointerdown", down);
+      el.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+      el.style.cursor = "";
+    };
+  }, [enabled, gl]);
 
-      {/* main volume */}
-      <mesh position={[0, 1.35, 0]} castShadow receiveShadow>
-        <boxGeometry args={[4.6, 2.7, 3.4]} />
-        <primitive object={wallMat} attach="material" />
-      </mesh>
-
-      {/* second storey offset */}
-      <mesh position={[1.1, 3.35, -0.15]} castShadow receiveShadow>
-        <boxGeometry args={[3.2, 1.5, 2.8]} />
-        <primitive object={wallMat} attach="material" />
-      </mesh>
-
-      {/* side wing */}
-      <mesh position={[-2.55, 1.0, 0.2]} castShadow receiveShadow>
-        <boxGeometry args={[1.8, 2.0, 2.6]} />
-        <primitive object={concreteMat} attach="material" />
-      </mesh>
-
-      {/* flat roofs */}
-      <mesh position={[0, 2.78, 0]} castShadow>
-        <boxGeometry args={[4.85, 0.14, 3.65]} />
-        <primitive object={darkMat} attach="material" />
-      </mesh>
-      <mesh position={[1.1, 4.18, -0.15]} castShadow>
-        <boxGeometry args={[3.4, 0.12, 3.0]} />
-        <primitive object={darkMat} attach="material" />
-      </mesh>
-      <mesh position={[-2.55, 2.08, 0.2]} castShadow>
-        <boxGeometry args={[1.95, 0.1, 2.75]} />
-        <primitive object={darkMat} attach="material" />
-      </mesh>
-
-      {/* canopy */}
-      <mesh position={[0.35, 1.15, 2.05]} castShadow>
-        <boxGeometry args={[2.4, 0.1, 1.2]} />
-        <primitive object={woodMat} attach="material" />
-      </mesh>
-      <mesh position={[-0.55, 0.55, 2.35]} castShadow>
-        <boxGeometry args={[0.08, 1.15, 0.08]} />
-        <primitive object={darkMat} attach="material" />
-      </mesh>
-      <mesh position={[1.25, 0.55, 2.35]} castShadow>
-        <boxGeometry args={[0.08, 1.15, 0.08]} />
-        <primitive object={darkMat} attach="material" />
-      </mesh>
-
-      {/* door */}
-      <mesh position={[0.35, 0.7, 1.72]} castShadow>
-        <boxGeometry args={[0.85, 1.45, 0.08]} />
-        <primitive object={woodMat} attach="material" />
-      </mesh>
-
-      {/* balcony */}
-      <mesh position={[1.1, 2.85, 1.45]} castShadow>
-        <boxGeometry args={[2.6, 0.08, 0.9]} />
-        <primitive object={concreteMat} attach="material" />
-      </mesh>
-      <mesh position={[1.1, 3.15, 1.85]}>
-        <boxGeometry args={[2.5, 0.04, 0.04]} />
-        <meshStandardMaterial color="#d9d4cc" metalness={0.7} roughness={0.25} />
-      </mesh>
-
-      {/* glass facade */}
-      <Glass args={[1.5, 1.15, 0.06]} position={[-1.0, 1.45, 1.72]} accent={accent} />
-      <Glass args={[1.5, 1.15, 0.06]} position={[1.55, 1.45, 1.72]} accent={accent} />
-      <Glass args={[1.1, 0.9, 0.06]} position={[0.3, 3.4, 1.27]} accent={accent} />
-      <Glass args={[1.1, 0.9, 0.06]} position={[1.7, 3.4, 1.27]} accent={accent} />
-      <Glass
-        args={[0.06, 1.4, 1.6]}
-        position={[2.32, 1.4, 0]}
-        rotation={[0, 0, 0]}
-        accent={accent}
-      />
-      <Glass
-        args={[0.06, 1.1, 1.3]}
-        position={[-3.46, 1.15, 0.2]}
-        accent={accent}
-      />
-
-      {/* pool */}
-      <mesh position={[2.6, 0.02, 2.8]} receiveShadow>
-        <boxGeometry args={[2.4, 0.08, 1.5]} />
-        <meshPhysicalMaterial
-          color="#4f7f9a"
-          transmission={0.55}
-          roughness={0.15}
-          metalness={0.1}
-          thickness={0.5}
-        />
-      </mesh>
-
-      {/* landscaping */}
-      <Float speed={1.1} floatIntensity={0.15} rotationIntensity={0.05}>
-        <mesh position={[-3.6, 0.35, 2.4]} castShadow>
-          <sphereGeometry args={[0.45, 24, 24]} />
-          <meshStandardMaterial color="#3f5c3a" roughness={0.95} />
-        </mesh>
-      </Float>
-      <mesh position={[3.6, 0.55, -1.8]} castShadow>
-        <cylinderGeometry args={[0.08, 0.12, 0.9, 10]} />
-        <meshStandardMaterial color="#5a4636" />
-      </mesh>
-      <mesh position={[3.6, 1.35, -1.8]} castShadow>
-        <sphereGeometry args={[0.7, 20, 20]} />
-        <meshStandardMaterial color="#2f4a2c" roughness={0.9} />
-      </mesh>
-    </group>
-  );
+  return { azimuth, dragging };
 }
 
 function CameraRig({
   view,
   scrollProgress,
+  interactive,
 }: {
   view: HouseView;
   scrollProgress: MutableRefObject<number>;
+  interactive: boolean;
 }) {
   const { camera } = useThree();
-  const target = useRef({ x: 0.2, y: 1.6, z: 0 });
+  const target = useRef({ x: LOOK_OFFSET[0], y: LOOK_OFFSET[1], z: LOOK_OFFSET[2] });
+  const idle = useRef(0);
+  const { azimuth, dragging } = useDragAzimuth(interactive);
 
   const presets = useMemo(
     () => ({
-      orbit: { pos: [5.2, 2.8, 5.8] as const, look: [0.2, 1.5, 0] as const },
-      front: { pos: [0.4, 2.0, 7.2] as const, look: [0.2, 1.5, 0] as const },
-      side: { pos: [7.4, 2.4, 0.4] as const, look: [0, 1.6, 0] as const },
-      aerial: { pos: [3.2, 8.2, 3.8] as const, look: [0.2, 0.4, 0] as const },
+      orbit: { look: LOOK_OFFSET, fov: 30 },
+      entry: {
+        pos: [2.1, 1.85, 9.4] as const,
+        look: [1.65, 1.45, 1.4] as const,
+        fov: 32,
+      },
+      living: {
+        pos: [4.2, 2.0, 7.4] as const,
+        look: [1.9, 1.55, 0.6] as const,
+        fov: 30,
+      },
+      garden: {
+        pos: [8.2, 2.4, 7.1] as const,
+        look: [3.5, 0.7, 2.8] as const,
+        fov: 34,
+      },
+      terrace: {
+        pos: [6.4, 5.6, 6.8] as const,
+        look: [2.3, 3.5, 0.6] as const,
+        fov: 32,
+      },
+      aerial: {
+        pos: [5.2, 12.2, 8.0] as const,
+        look: [1.6, 0.2, 0.2] as const,
+        fov: 44,
+      },
     }),
     [],
   );
 
   useFrame((_, delta) => {
     const p = scrollProgress.current;
-    const base = presets[view];
-    const angle = p * Math.PI * 1.35;
-    const radius = MathUtils.lerp(6.2, 4.4, Math.min(p * 1.2, 1));
-    const height = MathUtils.lerp(2.6, 3.8, p);
+    const preset = presets[view];
 
-    const scrollPos =
-      view === "orbit"
-        ? {
-            x: Math.sin(angle + 0.55) * radius,
-            y: height,
-            z: Math.cos(angle + 0.55) * radius,
-          }
-        : { x: base.pos[0], y: base.pos[1], z: base.pos[2] };
+    if (!dragging.current && view === "orbit") {
+      idle.current += delta * 0.1;
+    }
 
-    camera.position.x = MathUtils.damp(camera.position.x, scrollPos.x, 3.2, delta);
-    camera.position.y = MathUtils.damp(camera.position.y, scrollPos.y, 3.2, delta);
-    camera.position.z = MathUtils.damp(camera.position.z, scrollPos.z, 3.2, delta);
+    let goal = { x: 5.4, y: 2.4, z: 5.8 };
+    let look = { x: preset.look[0], y: preset.look[1], z: preset.look[2] };
+    let fov = preset.fov;
 
-    target.current.x = MathUtils.damp(target.current.x, base.look[0], 4, delta);
-    target.current.y = MathUtils.damp(target.current.y, base.look[1], 4, delta);
-    target.current.z = MathUtils.damp(target.current.z, base.look[2], 4, delta);
+    if (view === "orbit") {
+      const angle = 0.72 + p * Math.PI * 1.45 + azimuth.current + idle.current;
+      const radius = MathUtils.lerp(10.4, 6.8, Math.min(p * 1.05, 1));
+      const height = MathUtils.lerp(3.35, 5.4, p) + Math.sin(p * Math.PI) * 0.4;
+      goal = {
+        x: Math.sin(angle) * radius + 1.55,
+        y: height,
+        z: Math.cos(angle) * radius + 0.8,
+      };
+      look = {
+        x: LOOK_OFFSET[0],
+        y: MathUtils.lerp(1.45, 2.1, p),
+        z: LOOK_OFFSET[2],
+      };
+      fov = MathUtils.lerp(36, 30, p);
+    } else {
+      const [px, py, pz] = preset.pos;
+      const dx = px - look.x;
+      const dz = pz - look.z;
+      const dist = Math.hypot(dx, dz);
+      const base = Math.atan2(dx, dz);
+      const a = base + azimuth.current * 0.45;
+      goal = {
+        x: look.x + Math.sin(a) * dist,
+        y: py,
+        z: look.z + Math.cos(a) * dist,
+      };
+    }
+
+    camera.position.x = MathUtils.damp(camera.position.x, goal.x, 3.4, delta);
+    camera.position.y = MathUtils.damp(camera.position.y, goal.y, 3.4, delta);
+    camera.position.z = MathUtils.damp(camera.position.z, goal.z, 3.4, delta);
+    target.current.x = MathUtils.damp(target.current.x, look.x, 4.2, delta);
+    target.current.y = MathUtils.damp(target.current.y, look.y, 4.2, delta);
+    target.current.z = MathUtils.damp(target.current.z, look.z, 4.2, delta);
     camera.lookAt(target.current.x, target.current.y, target.current.z);
+    camera.fov = MathUtils.damp(camera.fov, fov, 3, delta);
+    camera.updateProjectionMatrix();
   });
 
   return null;
 }
 
-function Studio({ mode }: { mode: "dark" | "light" }) {
+function Hotspot({
+  position,
+  label,
+  id,
+  active,
+  onSelect,
+}: {
+  position: [number, number, number];
+  label: string;
+  id: HouseView;
+  active: boolean;
+  onSelect?: (view: HouseView) => void;
+}) {
+  return (
+    <Html position={position} center distanceFactor={14} zIndexRange={[40, 0]}>
+      <button
+        type="button"
+        onPointerDown={(event) => event.stopPropagation()}
+        onClick={() => onSelect?.(id)}
+        className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-medium tracking-[0.14em] uppercase backdrop-blur-md transition ${
+          active
+            ? "border-transparent bg-[var(--accent)] text-[var(--on-accent)]"
+            : "border-white/25 bg-black/45 text-white hover:border-[var(--accent)]"
+        }`}
+      >
+        <span
+          className={`h-1.5 w-1.5 rounded-full ${
+            active ? "bg-[var(--on-accent)]" : "bg-[var(--accent)] animate-pulse"
+          }`}
+        />
+        {label}
+      </button>
+    </Html>
+  );
+}
+
+function Exposure({ night }: { night: boolean }) {
+  const { gl } = useThree();
+  useEffect(() => {
+    gl.toneMappingExposure = night ? 0.9 : 1.12;
+  }, [gl, night]);
+  return null;
+}
+
+function Lights({ night, mode }: { night: boolean; mode: "dark" | "light" }) {
+  const sun = night ? ([7.5, 6.2, 3.2] as const) : ([8.5, 11, 5] as const);
+
   return (
     <>
-      <ambientLight intensity={mode === "light" ? 0.55 : 0.25} />
-      <spotLight
-        position={[6, 10, 4]}
-        angle={0.45}
-        penumbra={0.9}
-        intensity={mode === "light" ? 2.2 : 1.6}
-        castShadow
-        shadow-mapSize={[2048, 2048]}
+      <hemisphereLight
+        color={night ? "#6a7c94" : "#eef3f8"}
+        groundColor={night ? "#2a241c" : "#9a9286"}
+        intensity={night ? 0.55 : 0.75}
       />
-      <spotLight position={[-5, 6, -2]} angle={0.5} penumbra={1} intensity={0.55} color="#b8c7d4" />
-      <Environment resolution={256}>
-        <Lightformer intensity={1.6} position={[0, 4, -4]} scale={[8, 2, 1]} color="white" />
-        <Lightformer intensity={0.8} position={[4, 1, 2]} scale={[4, 3, 1]} color="#dff0ff" />
-        <Lightformer intensity={0.5} position={[-4, 2, 1]} scale={[3, 4, 1]} color="#ffe8c8" />
+      <ambientLight intensity={night ? 0.28 : mode === "light" ? 0.55 : 0.38} />
+      <directionalLight
+        position={sun}
+        intensity={night ? 2.1 : 2.8}
+        color={night ? "#ffb070" : "#fff6ea"}
+        castShadow
+        shadow-mapSize={[1024, 1024]}
+        shadow-bias={-0.0004}
+        shadow-normalBias={0.04}
+        shadow-camera-near={1}
+        shadow-camera-far={32}
+        shadow-camera-left={-12}
+        shadow-camera-right={12}
+        shadow-camera-top={12}
+        shadow-camera-bottom={-12}
+      />
+      <directionalLight
+        position={[-5, 4, 6]}
+        intensity={night ? 0.45 : 0.7}
+        color="#c5d4e0"
+      />
+      <spotLight
+        position={[-4, 8, 4]}
+        angle={0.6}
+        penumbra={1}
+        intensity={night ? 0.5 : 0.8}
+        color="#d7e4f0"
+      />
+      <Environment resolution={256} environmentIntensity={night ? 0.55 : 0.9}>
+        <Lightformer
+          intensity={night ? 2.4 : 3.2}
+          position={[4, 7, 3]}
+          scale={[8, 8, 1]}
+          color={night ? "#ff9a5c" : "#fff4e0"}
+        />
+        <Lightformer
+          intensity={1.1}
+          position={[-6, 2, 1]}
+          scale={[5, 4, 1]}
+          color="#b7cbe0"
+        />
+        <Lightformer
+          intensity={0.7}
+          position={[0, 3, -6]}
+          scale={[12, 5, 1]}
+          color={night ? "#3d2a38" : "#e4eef6"}
+        />
       </Environment>
     </>
   );
 }
 
-function SceneContent({ accent, mode, view, scrollProgress, interactive }: SceneProps) {
-  const villa = (
-    <Float speed={0.8} rotationIntensity={0.05} floatIntensity={0.08}>
-      <ModernVilla accent={accent} />
-    </Float>
-  );
+function SceneContent({
+  accent,
+  mode,
+  view,
+  timeOfDay,
+  scrollProgress,
+  interactive,
+  onSelectView,
+}: SceneProps) {
+  const night = timeOfDay === "dusk";
 
   return (
     <>
-      <Studio mode={mode} />
-      <CameraRig view={view} scrollProgress={scrollProgress} />
-
-      {interactive ? (
-        <PresentationControls
-          global
-          cursor
-          snap
-          speed={1.15}
-          zoom={0.9}
-          polar={[-0.15, 0.35]}
-          azimuth={[-0.75, 0.75]}
-        >
-          {villa}
-        </PresentationControls>
-      ) : (
-        villa
-      )}
-
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.08, 0]}>
-        <planeGeometry args={[28, 28]} />
-        <MeshReflectorMaterial
-          blur={[300, 80]}
-          resolution={512}
-          mixBlur={0.85}
-          mixStrength={mode === "light" ? 18 : 28}
-          roughness={0.92}
-          depthScale={0.6}
-          minDepthThreshold={0.4}
-          maxDepthThreshold={1.4}
-          color={mode === "light" ? "#d9d3c7" : "#151812"}
-          metalness={0.2}
+      <Exposure night={night} />
+      <Lights night={night} mode={mode} />
+      <CameraRig view={view} scrollProgress={scrollProgress} interactive={interactive} />
+      <group position={[1.2, 0, 0]}>
+        <Villa accent={accent} night={night} />
+        <Hotspot
+          position={[0.5, 2.55, 2.5]}
+          label="Living"
+          id="living"
+          active={view === "living"}
+          onSelect={onSelectView}
         />
-      </mesh>
-
-      <ContactShadows
-        position={[0, -0.07, 0]}
-        opacity={mode === "light" ? 0.4 : 0.55}
-        scale={16}
-        blur={2.8}
-        far={7}
-      />
+        <Hotspot
+          position={[2.55, 1.15, 3.4]}
+          label="Garden"
+          id="garden"
+          active={view === "garden"}
+          onSelect={onSelectView}
+        />
+        <Hotspot
+          position={[1.05, 4.05, 2.15]}
+          label="Terrace"
+          id="terrace"
+          active={view === "terrace"}
+          onSelect={onSelectView}
+        />
+        <ContactShadows
+          position={[0, -0.01, 0]}
+          opacity={night ? 0.5 : mode === "light" ? 0.3 : 0.42}
+          scale={18}
+          blur={2.4}
+          far={8}
+        />
+      </group>
     </>
   );
 }
@@ -364,35 +370,58 @@ export default function ConstructionCanvas({
   accent = "#6b7e45",
   mode = "dark",
   view = "orbit",
+  timeOfDay = "dusk",
   scrollProgress,
   interactive = true,
+  onSelectView,
 }: {
   className?: string;
   accent?: string;
   mode?: "dark" | "light";
   view?: HouseView;
+  timeOfDay?: TimeOfDay;
   scrollProgress: MutableRefObject<number>;
   interactive?: boolean;
+  onSelectView?: (view: HouseView) => void;
 }) {
   return (
-    <div className={`h-full w-full touch-none ${className}`}>
+    <div className={`absolute inset-0 h-full w-full touch-none [&_canvas]:!h-full [&_canvas]:!w-full ${className}`}>
+      <SceneErrorBoundary>
       <Canvas
+        className="h-full w-full"
+        style={{ width: "100%", height: "100%" }}
         shadows
         dpr={[1, 1.75]}
-        camera={{ position: [5.2, 2.8, 5.8], fov: 32, near: 0.1, far: 60 }}
-        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        resize={{ offsetSize: true, debounce: 0 }}
+        camera={{ position: [8.4, 3.5, 9.2], fov: 36, near: 0.1, far: 80 }}
+        onCreated={(state) => {
+          const el = state.gl.domElement;
+          const parent = el.parentElement;
+          if (!parent) return;
+          el.style.width = "100%";
+          el.style.height = "100%";
+          state.setSize(parent.clientWidth, parent.clientHeight);
+        }}
+        gl={{
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance",
+        }}
       >
-        <color attach="background" args={["#00000000"]} />
+        <color attach="background" args={["#151a14"]} />
         <Suspense fallback={null}>
           <SceneContent
             accent={accent}
             mode={mode}
             view={view}
+            timeOfDay={timeOfDay}
             scrollProgress={scrollProgress}
             interactive={interactive}
+            onSelectView={onSelectView}
           />
         </Suspense>
       </Canvas>
+      </SceneErrorBoundary>
     </div>
   );
 }

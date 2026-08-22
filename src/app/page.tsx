@@ -7,7 +7,6 @@ import {
   ClosingSection,
   ProjectsSection,
   ServicesPreview,
-  TeamSection,
   WarrantySection,
 } from "@/components/home/HomeSections";
 import { home, site } from "@/content/site";
@@ -52,9 +51,7 @@ export default function HomePage() {
       <ArchitectureGallery />
       <ServicesPreview />
       <ProjectsSection />
-      <TeamSection />
       <WarrantySection />
-      <ClosingSection />
     </main>
   );
 }

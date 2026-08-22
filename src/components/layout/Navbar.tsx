@@ -14,7 +14,7 @@ export default function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       <div className="section-pad flex items-center justify-between gap-4 border-b border-line/60 bg-background/80 py-3 backdrop-blur-md">
-        <BrandLogo height={44} />
+        <BrandLogo height={82} />
 
         <nav className="hidden items-center gap-8 lg:flex">
           {navLinks.map((link) =>

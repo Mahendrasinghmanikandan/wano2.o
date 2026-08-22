@@ -78,7 +78,7 @@ export const servicesNav = [
 ];
 
 export const home = {
-  heroTitle: "Engineered Buildings Built the Right Way",
+  heroTitle: `Engineered Buildings Built the Right Way`,
   heroSupport:
     "Architecture, Structural Design, Soil Study, MEP Coordination, and Construction — delivered through one structured workflow.",
   heroSub:
@@ -122,8 +122,18 @@ export const home = {
   warrantyBody:
     "We treat every project as an important investment and focus on delivering with accountability and technical discipline.",
   warranties: [
-    { label: "Structural Warranty", value: "15 Years" },
-    { label: "Workmanship Warranty", value: "1 Year" },
+    {
+      label: "Structural Warranty",
+      value: "15",
+      unit: "Years",
+      detail: "Frame, slab, and load-bearing work — covered after handover.",
+    },
+    {
+      label: "Workmanship Warranty",
+      value: "1",
+      unit: "Year",
+      detail: "On-site finish and execution quality — we stand behind the build.",
+    },
   ],
   closingHeading: "Built with Planning, Precision, and Responsibility",
   closingBody:
@@ -214,14 +224,12 @@ export const aboutPage = {
   },
   different: {
     heading: "What Makes Wano Projects Different",
-    intro: "Our key strengths are:",
+    intro: "Professional engineering made practical and accessible at local-market cost",
     points: [
-      "Complete workflow from planning to handover",
-      "No skipped engineering stages",
-      "Checklist-based execution at every stage",
-      "Early coordination of architectural, structural, and service design",
-      "Cost-overrun control through proper planning",
-      "Practical local-market pricing",
+      "Practical Local-Market Pricing",
+      "Cost Overrun Risk Control",
+      "Cost-Benefit Analysis Before Execution",
+      "Checklist-Based Execution",
       "Structured responsibility and warranty support",
     ],
   },
@@ -901,3 +909,8 @@ export const faqSections: {
     ],
   },
 ];
+
+
+export const VIDEO_HELPER = {
+  ABOUT_PAGE: "/video/about.mp4",
+} as const;
