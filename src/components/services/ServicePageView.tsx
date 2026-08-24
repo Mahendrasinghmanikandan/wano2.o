@@ -9,7 +9,7 @@ import type { ServicePage } from "@/content/site";
 export default function ServicePageView({ service }: { service: ServicePage }) {
   return (
     <article>
-      <section className="section-pad relative min-h-[70vh] overflow-hidden -b  pb-16 pt-32">
+      <section className="section-pad relative min-h-[70vh] overflow-hidden -b -line pb-16 pt-32">
         <div className="absolute inset-0 -z-10">
           <MediaImage
             src={service.image}
@@ -56,14 +56,14 @@ export default function ServicePageView({ service }: { service: ServicePage }) {
       </section>
 
       {service.listItems ? (
-        <section className="section-pad  bg-surface/50 py-20">
+        <section className="section-pad  -line bg-surface/50 py-20">
           <FadeIn>
             <SectionHeading title={service.listHeading ?? "What we offer"} />
           </FadeIn>
           <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {service.listItems.map((item, i) => (
               <FadeIn key={item} delay={i * 0.03}>
-                <li className="  bg-background/40 px-5 py-4 text-sm text-concrete transition hover:-accent/40 hover:bg-surface">
+                <li className=" -line bg-background/40 px-5 py-4 text-sm text-concrete transition hover:-accent/40 hover:bg-surface">
                   <span className="mr-3 text-accent">▸</span>
                   {item}
                 </li>
@@ -85,7 +85,7 @@ export default function ServicePageView({ service }: { service: ServicePage }) {
           <ol className="mt-14 grid gap-4 lg:grid-cols-2">
             {service.workflow.map((step, i) => (
               <FadeIn key={step.title} delay={i * 0.04}>
-                <li className="flex gap-5   bg-surface p-6 transition hover:-accent/35">
+                <li className="flex gap-5  -line bg-surface p-6 transition hover:-accent/35">
                   <span className={`text-2xl font-semibold text-accent ${outfit.className}`}>
                     {String(i + 1).padStart(2, "0")}
                   </span>
@@ -112,7 +112,7 @@ export default function ServicePageView({ service }: { service: ServicePage }) {
       ) : null}
 
       {service.extraSections?.map((section) => (
-        <section key={section.heading} className="section-pad   py-16">
+        <section key={section.heading} className="section-pad -t -line py-16">
           <FadeIn>
             <SectionHeading title={section.heading} />
             {Array.isArray(section.body) ? (
@@ -120,7 +120,7 @@ export default function ServicePageView({ service }: { service: ServicePage }) {
                 {section.body.map((item) => (
                   <li
                     key={item}
-                    className="  px-5 py-4 text-sm text-concrete transition hover:-accent/35"
+                    className=" -line px-5 py-4 text-sm text-concrete transition hover:-accent/35"
                   >
                     {item}
                   </li>
@@ -167,7 +167,7 @@ export default function ServicePageView({ service }: { service: ServicePage }) {
         </section>
       ) : null}
 
-      <section className="section-pad   py-20">
+      <section className="section-pad -t -line py-20">
         <FadeIn>
           <p className="max-w-2xl text-xl text-concrete">
             {service.cta ?? "Ready to plan your next project? Contact Wano Projects."}
@@ -181,7 +181,7 @@ export default function ServicePageView({ service }: { service: ServicePage }) {
             </Link>
             <Link
               href="/services"
-              className="rounded-sm   px-7 py-3 text-sm text-foreground"
+              className="rounded-sm  -line px-7 py-3 text-sm text-foreground"
             >
               All Services
             </Link>

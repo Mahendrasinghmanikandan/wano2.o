@@ -9,7 +9,7 @@ import { services } from "@/content/site";
 export default function ServicesIndexView() {
   return (
     <>
-      <section className="section-pad relative overflow-hidden border-b border-line pb-16 pt-32">
+      <section className="section-pad relative overflow-hidden   pb-16 pt-32">
         <div className="absolute inset-0 -z-10 site-grain" />
         <FadeIn>
           <p className={`text-xs tracking-[0.28em] text-accent uppercase ${outfit.className}`}>
@@ -30,7 +30,7 @@ export default function ServicesIndexView() {
             <FadeIn key={service.slug} delay={i * 0.04}>
               <Link
                 href={`/services/${service.slug}`}
-                className="group block overflow-hidden border border-line bg-surface transition hover:border-accent/45"
+                className="group block overflow-hidden   bg-surface transition hover:border-accent/45"
               >
                 <MediaImage
                   src={service.image}

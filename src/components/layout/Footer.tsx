@@ -11,6 +11,29 @@ export default function Footer() {
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
             {site.description}
           </p>
+          <div className="mt-5 space-y-2 text-sm">
+            <a href={`mailto:${site.email}`} className="block text-concrete hover:text-foreground">
+              {site.email}
+            </a>
+            {site.phones.map((phone) => (
+              <a key={phone.href} href={phone.href} className="block text-concrete hover:text-foreground">
+                {phone.label}
+              </a>
+            ))}
+            <div className="flex flex-wrap gap-3 pt-1">
+              {site.social.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-concrete hover:text-foreground"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
         <div>
           <p className="text-xs tracking-[0.2em] text-accent uppercase">Explore</p>

@@ -18,7 +18,7 @@ export function BelowHeroCopy() {
   return (
     <section className="section-pad border-y border-line bg-surface py-16">
       <Aos direction="up">
-        <p className="max-w-4xl text-xl leading-relaxed text-concrete sm:text-2xl">
+        <p className={`!text-6xl font-semibold text-center tracking-wide text-foreground ${displayFont.className}`}>
           {home.heroSub}
         </p>
       </Aos>

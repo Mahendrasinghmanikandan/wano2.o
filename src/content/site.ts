@@ -6,14 +6,40 @@ export const site = {
   url: "https://wanoprojects.com",
   locale: "en_IN",
   contactCta: "Contact Wano Projects",
-  email: "hello@wanoprojects.com",
+  email: "info@wano.org.in",
+  enquiryApi: "https://wano-services.vercel.app/api/v1/send-email",
+  phones: [
+    { label: "+91 88703 32250", href: "tel:+918870332250" },
+    { label: "+91 8668134664", href: "tel:+918668134664" },
+  ],
+  social: [
+    { label: "Facebook", href: "https://www.facebook.com/WANO.ACE" },
+    { label: "Instagram", href: "https://www.instagram.com/wano_ace" },
+  ],
   location: {
     label: "Tamil Nadu, India",
-    mapEmbed:
-      "https://www.openstreetmap.org/export/embed.html?bbox=76.8%2C8.0%2C80.4%2C13.6&layer=mapnik&marker=11.1271%2C78.6569",
-    mapLink: "https://www.openstreetmap.org/?mlat=11.1271&mlon=78.6569#map=7/11.127/78.657",
-    cover: "/images/contact-map-cover.jpg",
   },
+  branches: [
+    {
+      name: "Branch 1",
+      city: "Avadi, Chennai",
+      address:
+        "E-Block, 232, Mahindra Happinest, Paruthippattu, PARUTHIPATTU, Avadi, Chennai, Tamil Nadu 600071",
+      mapLink:
+        "https://www.google.com/maps/place/WANO+ARCHITECTS+AND+CONSULTING+ENGINEERS/@13.0912944,80.1137199,17z/data=!3m1!4b1!4m6!3m5!1s0x3a526326b7c34ef3:0xa168dae109c1414c!8m2!3d13.0912944!4d80.1137199!16s%2Fg%2F11x231g2y3",
+      mapEmbed:
+        "https://www.google.com/maps?q=WANO+ARCHITECTS+AND+CONSULTING+ENGINEERS,+Paruthippattu,+Avadi,+Chennai&z=17&output=embed",
+    },
+    {
+      name: "Branch 2",
+      city: "Sivaganga",
+      address: "14- Woodland Complex, Near Court vaasal, Sivaganga, Tamil Nadu 630561",
+      mapLink:
+        "https://www.google.com/maps/search/?api=1&query=14+Woodland+Complex+Near+Court+vaasal+Sivaganga+Tamil+Nadu+630561",
+      mapEmbed:
+        "https://www.google.com/maps?q=14+Woodland+Complex,+Near+Court+vaasal,+Sivaganga,+Tamil+Nadu+630561&z=16&output=embed",
+    },
+  ],
 };
 
 export const navLinks = [
@@ -21,7 +47,7 @@ export const navLinks = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Projects", href: "/#projects" },
-  { label: "Team", href: "/#team" },
+  { label: "Team", href: "/about#team" },
   { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ];
@@ -82,7 +108,7 @@ export const home = {
   heroSupport:
     "Architecture, Structural Design, Soil Study, MEP Coordination, and Construction — delivered through one structured workflow.",
   heroSub:
-    "Every project follows essential engineering stages without skipping critical steps.",
+    "Engineering First. Building with Confidence.",
   aboutHeading: "About Wano",
   aboutBody: [
     "Wano Projects is an engineering-driven design and construction company that brings architecture, structural design, MEP coordination, and construction together under one system. We focus on proper planning, disciplined execution, and practical solutions to deliver safe, reliable, and well-engineered buildings.",
