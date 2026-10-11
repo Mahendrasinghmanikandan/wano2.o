@@ -173,31 +173,31 @@ export const team = [
   {
     name: "Gogulan R",
     role: "Principal Architect",
-    image: "/images/team/gogulan.jpg",
+    image: "/images/team/gogulan.png",
     bio: "An award-winning architect, known for innovative and creative designs that blend aesthetics with functionality. He leads architectural planning, ensuring smooth integration with structural and MEP systems, and focuses on creating high-quality, user-centric spaces while driving design excellence and operational efficiency.",
   },
   {
     name: "Adhikaraneshan A",
     role: "Chief Structural Engineer",
-    image: "/images/team/adhikaraneshan.jpg",
+    image: "/images/team/adhikaraneshan.png",
     bio: "Smart India Hackathon Winner and EDII-trained leader, Adhikaraneshan brings a strong foundation in research-driven structural engineering. With extensive experience in R&D, he specializes in optimizing and innovating foundation systems, as well as designing RCC, steel, composite, and PT structures. As head of structural R&D, he provides cost-efficient, practical solutions for complex and custom structural systems.",
   },
   {
     name: "ER. Mutharasan M",
     role: "Lead MEP Engineer",
-    image: "/images/team/mutharasan.jpg",
+    image: "/images/team/mutharasan.png",
     bio: "An internationally experienced MEP engineer with a strong background in high-rise building projects, having worked abroad on large-scale developments. He excels in managing integrated MEP systems, overseeing site execution, and coordinating with structural and architectural teams to ensure technical reliability, safety compliance, and operational efficiency across all service systems in complex buildings.",
   },
   {
     name: "Praveenkumar KR",
     role: "Lead Engineer Civil & Structural",
-    image: "/images/team/praveenkumar.jpg",
+    image: "/images/team/praveenkumar.png",
     bio: "A skilled civil engineer and expert in detailed execution and project management. He ensures seamless implementation of construction plans, overseeing site activities, managing estimations, and ensuring adherence to the highest standards of quality, safety, and project timelines.",
   },
   {
     name: "Sureshseeman R",
     role: "Lead Engineer Civil & Structural",
-    image: "/images/team/sureshseeman.jpg",
+    image: "/images/team/sureshseeman.png",
     bio: "With significant experience in high-rise projects, Sureshseeman coordinates civil works and ensures alignment with structural designs. He plays a crucial role in managing on-site activities, reviewing drawings, and enforcing safety and quality standards to ensure efficient project execution and successful delivery.",
   },
 ];
