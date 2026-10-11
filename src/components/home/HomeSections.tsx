@@ -258,7 +258,7 @@ export function TeamSection() {
                 >
                   {member.name}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted">
+                <p className="mt-3 text-base leading-relaxed text-muted">
                   {member.bio}
                 </p>
               </div>
