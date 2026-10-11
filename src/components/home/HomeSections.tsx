@@ -71,26 +71,38 @@ export function AboutTeaser() {
 
 export function ArchitectureGallery() {
   return (
-    <section className="section-pad py-24">
-      <FadeIn>
-        <SectionHeading
-          title={aboutPage.different.heading}
-          body={aboutPage.different.intro}
-        />
+<section className="section-pad py-24">
+  <FadeIn>
+    <SectionHeading
+      title={aboutPage.different.heading}
+      body={aboutPage.different.intro}
+    />
+  </FadeIn>
+
+  <div className="mt-14  max-w-4xl">
+    {aboutPage.different.points.map((point, i) => (
+      <FadeIn key={point} delay={i * 0.08}>
+        <div className="group relative flex gap-6 border-b border-line py-7 transition-colors hover:border-accent/50 sm:gap-10">
+          {/* Number */}
+          <span
+            className={`shrink-0 text-2xl font-light text-accent/70 transition-colors group-hover:text-accent sm:text-3xl ${outfit.className}`}
+          >
+            {String(i + 1).padStart(2, "0")}
+          </span>
+
+          {/* Content */}
+          <div className="flex flex-1 items-center justify-between gap-4">
+            <h3
+              className={`text-lg font-medium text-foreground transition-colors group-hover:text-accent sm:text-xl ${outfit.className}`}
+            >
+              {point}
+            </h3>
+          </div>
+        </div>
       </FadeIn>
-      <ul className="mt-12 grid gap-4 md:grid-cols-2">
-        {aboutPage.different.points.map((point, i) => (
-          <FadeIn key={point} delay={i * 0.04}>
-            <li className="flex gap-4 border border-line bg-background/50 px-6 py-5 transition hover:border-accent/40">
-              <span className={`text-accent ${outfit.className}`}>
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <span className="text-base text-concrete">{point}</span>
-            </li>
-          </FadeIn>
-        ))}
-      </ul>
-    </section>
+    ))}
+  </div>
+</section>
   );
 }
 
@@ -263,7 +275,7 @@ export function ServicesPreview() {
     <section className="section-pad  bg-surface/80 py-24">
       <SectionHeading
         eyebrow="Services"
-        title="One structured workflow"
+        title="Our Services, Built Around a Clear Process"
         body="From planning to handover — architecture, structure, MEP, construction, and more under one roof."
       />
       <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

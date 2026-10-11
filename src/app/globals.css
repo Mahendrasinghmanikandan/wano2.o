@@ -294,3 +294,8 @@ body {
   opacity: 0.65;
 }
 
+
+
+.text-base {
+  font-size: 1.5rem !important;
+}

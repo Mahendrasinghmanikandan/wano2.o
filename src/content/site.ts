@@ -112,7 +112,7 @@ export const home = {
   aboutHeading: "About Wano",
   aboutBody: [
     "Wano Projects is an engineering-driven design and construction company that brings architecture, structural design, MEP coordination, and construction together under one system. We focus on proper planning, disciplined execution, and practical solutions to deliver safe, reliable, and well-engineered buildings.",
-    "Wano Projects is an engineering-driven design and construction company working across residential and renovation projects. We provide integrated services including architectural planning, structural design, soil investigation, MEP coordination, construction, project management consultancy, and structural audit. Our approach is based on one clear principle: a building should be properly planned before it is built.",
+    // "Wano Projects is an engineering-driven design and construction company working across residential and renovation projects. We provide integrated services including architectural planning, structural design, soil investigation, MEP coordination, construction, project management consultancy, and structural audit. Our approach is based on one clear principle: a building should be properly planned before it is built.",
   ],
   projectsHeading: "Projects",
   projects: [
@@ -164,7 +164,7 @@ export const home = {
   closingHeading: "Built with Planning, Precision, and Responsibility",
   closingBody:
     "Wano Projects focuses on doing the right steps in the right order. Our goal is to deliver buildings that are safe, practical, and reliable for long-term use.",
-  teamHeading: "Our Team",
+  teamHeading: "Our Core Team",
   teamBody:
     "Engineers, architects, and site leads who keep planning, structure, and execution aligned from first drawing to handover.",
 };

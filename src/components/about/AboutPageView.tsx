@@ -32,6 +32,11 @@ export default function AboutPageView() {
           >
             {aboutPage.heroLine}
           </h1>
+           <h1
+            className={`mt-6 max-w-5xl text-base text-accent ${outfit.className}`}
+          >
+           Since 2024, Wano Projects has been delivering thoughtfully designed spaces and well-engineered buildings  
+          </h1>
         </FadeIn>
       </section>
 
