@@ -3,7 +3,7 @@ import FaqPageView from "@/components/faq/FaqPageView";
 import { faqIntro, faqSections, site } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: "FAQ",
+  title: "FAQ ",
   description: faqIntro,
   openGraph: {
     title: `FAQ | ${site.name}`,
