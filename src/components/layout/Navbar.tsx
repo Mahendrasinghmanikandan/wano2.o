@@ -27,7 +27,7 @@ export default function Navbar() {
               >
                 <Link
                   href={link.href}
-                  className="text-sm tracking-wide text-concrete transition hover:text-foreground"
+                  className="text-base tracking-wide text-concrete transition hover:text-foreground"
                 >
                   Services
                 </Link>
@@ -43,7 +43,7 @@ export default function Navbar() {
                         <Link
                           key={s.href}
                           href={s.href}
-                          className="block px-3 py-2 text-sm text-concrete transition hover:bg-surface-2 hover:text-foreground"
+                          className="block px-3 py-2 text-base text-concrete transition hover:bg-surface-2 hover:text-foreground"
                         >
                           {s.label}
                         </Link>
@@ -56,7 +56,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm tracking-wide text-concrete transition hover:text-foreground"
+                className="text-base tracking-wide text-concrete transition hover:text-foreground"
               >
                 {link.label}
               </Link>
