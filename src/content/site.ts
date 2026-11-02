@@ -1,3 +1,8 @@
+import tenkasi from "../assets/images/tengasi.png";
+import sivagangai from "../assets/images/Sivagangai.png";
+import vellore from "../assets/images/Vellore.png";
+import chennai from "../assets/images/chennai.png";
+
 export const site = {
   name: "Wano Projects",
   tagline: "Engineered Buildings Built the Right Way",
@@ -13,8 +18,8 @@ export const site = {
     { label: "+91 8668134664", href: "tel:+918668134664" },
   ],
   social: [
-    { label: "Facebook", href: "https://www.facebook.com/WANO.ACE" },
-    { label: "Instagram", href: "https://www.instagram.com/wano_ace" },
+    { label: "Facebook", href: "https://www.facebook.com/wanoprojects" },
+    { label: "Instagram", href: "https://www.instagram.com/wanoprojects" },
   ],
   location: {
     label: "Tamil Nadu, India",
@@ -121,27 +126,27 @@ export const home = {
       detail:
         "First floor swimming pool, second floor home theatre, villa-type building. ₹1 Cr project.",
       location: "Tenkasi",
-      image: "/images/projects/tenkasi.jpg",
+      image: tenkasi,
     },
     {
       title: "Twin Villa Sivagangai",
       detail:
         "Budget house by cost-benefit analysis — structurally safe building.",
       location: "Sivagangai",
-      image: "/images/projects/sivagangai.jpg",
+      image: sivagangai,
     },
     {
       title: "Vellore G+2",
       detail: "Farm house with gazebo at terrace.",
       location: "Vellore",
-      image: "/images/projects/vellore.jpg",
+      image: vellore,
     },
     {
       title: "Chennai Paruthipattu Renovation",
       detail:
         "KV Kendra Vihar — old building structural safety renovation.",
       location: "Chennai",
-      image: "/images/projects/chennai.jpg",
+      image: chennai,
     },
   ],
   warrantyHeading: "Built with Responsibility",
@@ -171,17 +176,18 @@ export const home = {
 
 export const team = [
   {
-    name: "Gogulan R",
-    role: "Principal Architect",
-    image: "/images/team/gogulan.png",
-    bio: "An award-winning architect, known for innovative and creative designs that blend aesthetics with functionality. He leads architectural planning, ensuring smooth integration with structural and MEP systems, and focuses on creating high-quality, user-centric spaces while driving design excellence and operational efficiency.",
-  },
-  {
     name: "Adhikaraneshan A",
     role: "Chief Structural Engineer",
     image: "/images/team/adhikaraneshan.png",
     bio: "Smart India Hackathon Winner and EDII-trained leader, Adhikaraneshan brings a strong foundation in research-driven structural engineering. With extensive experience in R&D, he specializes in optimizing and innovating foundation systems, as well as designing RCC, steel, composite, and PT structures. As head of structural R&D, he provides cost-efficient, practical solutions for complex and custom structural systems.",
   },
+  {
+    name: "Gogulan R",
+    role: "Principal Architect",
+    image: "/images/team/gogulan.png",
+    bio: "An award-winning architect, known for innovative and creative designs that blend aesthetics with functionality. He leads architectural planning, ensuring smooth integration with structural and MEP systems, and focuses on creating high-quality, user-centric spaces while driving design excellence and operational efficiency.",
+  },
+ 
   {
     name: "ER. Mutharasan M",
     role: "Lead MEP Engineer",
