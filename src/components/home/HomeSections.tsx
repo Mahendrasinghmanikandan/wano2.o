@@ -127,7 +127,7 @@ export function ProjectsSection() {
           >
             <article className="overflow-hidden border border-line bg-surface transition hover:border-accent/40">
               <MediaImage
-                src={project.image}
+                src={`${project.image}`}
                 alt={project.title}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
