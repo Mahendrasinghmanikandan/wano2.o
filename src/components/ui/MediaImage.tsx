@@ -14,12 +14,12 @@ export type HoverStyle =
   | "blueprint";
 
 type Props = Omit<ImageProps, "src" | "alt"> & {
-  src: string;
+  src: ImageProps["src"];
   alt: string;
   hover?: HoverStyle;
   caption?: string;
   frameClassName?: string;
-  fallbackSrc?: string;
+  fallbackSrc?: ImageProps["src"];
 };
 
 export default function MediaImage({
