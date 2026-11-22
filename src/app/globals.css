@@ -95,6 +95,7 @@ body {
 /* ——— Unique image hover styles ——— */
 .media-frame {
   isolation: isolate;
+  position: relative;
 }
 
 .media-stage {
