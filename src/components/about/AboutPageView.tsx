@@ -4,7 +4,6 @@ import { FadeIn, SectionHeading } from "@/components/ui/Motion";
 import MediaImage from "@/components/ui/MediaImage";
 import { displayFont, outfit } from "@/config/font.config";
 import { aboutPage, gallery } from "@/content/site";
-import { TeamSection } from "../home/HomeSections";
 
 export default function AboutPageView() {
   return (
@@ -31,11 +30,6 @@ export default function AboutPageView() {
             className={`mt-6 max-w-5xl text-4xl leading-[1.05] sm:text-6xl lg:text-7xl xl:text-8xl ${displayFont.className}`}
           >
             {aboutPage.heroLine}
-          </h1>
-           <h1
-            className={`mt-6 max-w-5xl text-base text-accent ${outfit.className}`}
-          >
-           Since 2024, Wano Projects has been delivering thoughtfully designed spaces and well-engineered buildings  
           </h1>
         </FadeIn>
       </section>
@@ -74,8 +68,42 @@ export default function AboutPageView() {
         </FadeIn>
       </section>
 
-      <TeamSection />
-      
+      <section className="section-pad border-t border-line bg-surface/40 py-24">
+        <FadeIn>
+          <SectionHeading
+            title={aboutPage.different.heading}
+            body={aboutPage.different.intro}
+          />
+        </FadeIn>
+        <ul className="mt-12 grid gap-4 md:grid-cols-2">
+          {aboutPage.different.points.map((point, i) => (
+            <FadeIn key={point} delay={i * 0.04}>
+              <li className="flex gap-4 border border-line bg-background/50 px-6 py-5 transition hover:border-accent/40">
+                <span className={`text-accent ${outfit.className}`}>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="text-base text-concrete">{point}</span>
+              </li>
+            </FadeIn>
+          ))}
+        </ul>
+
+        <div className="mt-14 grid gap-4 sm:grid-cols-3">
+          {gallery.slice(0, 3).map((item, i) => (
+            <FadeIn key={item.src} delay={i * 0.05}>
+              <MediaImage
+                src={item.src}
+                alt={item.alt}
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                frameClassName="aspect-[4/3]"
+                hover={(["wipe", "iris", "glow-frame"] as const)[i % 3]}
+                caption={item.caption}
+              />
+            </FadeIn>
+          ))}
+        </div>
+      </section>
     </article>
   );
 }

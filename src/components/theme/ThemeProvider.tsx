@@ -104,7 +104,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       storedMode === "light" || storedMode === "dark" ? storedMode : "dark";
     const nextAccent = accents.some((a) => a.id === storedAccent)
       ? (storedAccent as AccentId)
-      : "amber";
+      : "olive";
 
     setModeState(nextMode);
     setAccentState(nextAccent);

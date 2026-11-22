@@ -52,6 +52,7 @@ export default function HomePage() {
       <ServicesPreview />
       <ProjectsSection />
       <WarrantySection />
+      <ClosingSection />
     </main>
   );
 }

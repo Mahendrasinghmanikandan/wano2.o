@@ -14,7 +14,7 @@ export default function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       <div className="section-pad flex items-center justify-between gap-4 border-b border-line/60 bg-background/80 py-3 backdrop-blur-md">
-        <BrandLogo height={82} />
+        <BrandLogo height={44} />
 
         <nav className="hidden items-center gap-8 lg:flex">
           {navLinks.map((link) =>
@@ -27,7 +27,7 @@ export default function Navbar() {
               >
                 <Link
                   href={link.href}
-                  className="text-base tracking-wide text-concrete transition hover:text-foreground"
+                  className="text-sm tracking-wide text-concrete transition hover:text-foreground"
                 >
                   Services
                 </Link>
@@ -43,7 +43,7 @@ export default function Navbar() {
                         <Link
                           key={s.href}
                           href={s.href}
-                          className="block px-3 py-2 text-base text-concrete transition hover:bg-surface-2 hover:text-foreground"
+                          className="block px-3 py-2 text-sm text-concrete transition hover:bg-surface-2 hover:text-foreground"
                         >
                           {s.label}
                         </Link>
@@ -56,7 +56,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-base tracking-wide text-concrete transition hover:text-foreground"
+                className="text-sm tracking-wide text-concrete transition hover:text-foreground"
               >
                 {link.label}
               </Link>

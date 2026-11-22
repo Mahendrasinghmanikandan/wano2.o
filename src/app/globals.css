@@ -95,7 +95,6 @@ body {
 /* ——— Unique image hover styles ——— */
 .media-frame {
   isolation: isolate;
-  position: relative;
 }
 
 .media-stage {
@@ -294,8 +293,3 @@ body {
   opacity: 0.65;
 }
 
-
-
-.text-base {
-  font-size: 1.5rem !important;
-}

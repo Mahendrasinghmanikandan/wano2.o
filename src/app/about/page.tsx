@@ -17,7 +17,6 @@ export default function AboutPage() {
   return (
     <main>
       <AboutPageView />
-      
     </main>
   );
 }

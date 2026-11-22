@@ -1,8 +1,3 @@
-import tenkasi from "../assets/images/tengasi.png";
-import sivagangai from "../assets/images/Sivagangai.png";
-import vellore from "../assets/images/Vellore.png";
-import chennai from "../assets/images/chennai.png";
-
 export const site = {
   name: "Wano Projects",
   tagline: "Engineered Buildings Built the Right Way",
@@ -11,40 +6,14 @@ export const site = {
   url: "https://wanoprojects.com",
   locale: "en_IN",
   contactCta: "Contact Wano Projects",
-  email: "info@wano.org.in",
-  enquiryApi: "https://wano-services.vercel.app/api/v1/send-email",
-  phones: [
-    { label: "+91 88703 32250", href: "tel:+918870332250" },
-    { label: "+91 8668134664", href: "tel:+918668134664" },
-  ],
-  social: [
-    { label: "Facebook", href: "https://www.facebook.com/wanoprojects" },
-    { label: "Instagram", href: "https://www.instagram.com/wanoprojects" },
-  ],
+  email: "hello@wanoprojects.com",
   location: {
     label: "Tamil Nadu, India",
+    mapEmbed:
+      "https://www.openstreetmap.org/export/embed.html?bbox=76.8%2C8.0%2C80.4%2C13.6&layer=mapnik&marker=11.1271%2C78.6569",
+    mapLink: "https://www.openstreetmap.org/?mlat=11.1271&mlon=78.6569#map=7/11.127/78.657",
+    cover: "/images/contact-map-cover.jpg",
   },
-  branches: [
-    {
-      name: "Branch 1",
-      city: "Avadi, Chennai",
-      address:
-        "E-Block, 232, Mahindra Happinest, Paruthippattu, PARUTHIPATTU, Avadi, Chennai, Tamil Nadu 600071",
-      mapLink:
-        "https://www.google.com/maps/place/WANO+ARCHITECTS+AND+CONSULTING+ENGINEERS/@13.0912944,80.1137199,17z/data=!3m1!4b1!4m6!3m5!1s0x3a526326b7c34ef3:0xa168dae109c1414c!8m2!3d13.0912944!4d80.1137199!16s%2Fg%2F11x231g2y3",
-      mapEmbed:
-        "https://www.google.com/maps?q=WANO+ARCHITECTS+AND+CONSULTING+ENGINEERS,+Paruthippattu,+Avadi,+Chennai&z=17&output=embed",
-    },
-    {
-      name: "Branch 2",
-      city: "Sivaganga",
-      address: "14- Woodland Complex, Near Court vaasal, Sivaganga, Tamil Nadu 630561",
-      mapLink:
-        "https://www.google.com/maps/search/?api=1&query=14+Woodland+Complex+Near+Court+vaasal+Sivaganga+Tamil+Nadu+630561",
-      mapEmbed:
-        "https://www.google.com/maps?q=14+Woodland+Complex,+Near+Court+vaasal,+Sivaganga,+Tamil+Nadu+630561&z=16&output=embed",
-    },
-  ],
 };
 
 export const navLinks = [
@@ -52,7 +21,6 @@ export const navLinks = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Projects", href: "/#projects" },
-  { label: "Team", href: "/about#team" },
   { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ];
@@ -109,15 +77,15 @@ export const servicesNav = [
 ];
 
 export const home = {
-  heroTitle: `Engineered Buildings Built the Right Way`,
+  heroTitle: "Engineered Buildings Built the Right Way",
   heroSupport:
     "Architecture, Structural Design, Soil Study, MEP Coordination, and Construction — delivered through one structured workflow.",
   heroSub:
-    "Engineering First. Building with Confidence.",
+    "Every project follows essential engineering stages without skipping critical steps.",
   aboutHeading: "About Wano",
   aboutBody: [
     "Wano Projects is an engineering-driven design and construction company that brings architecture, structural design, MEP coordination, and construction together under one system. We focus on proper planning, disciplined execution, and practical solutions to deliver safe, reliable, and well-engineered buildings.",
-    // "Wano Projects is an engineering-driven design and construction company working across residential and renovation projects. We provide integrated services including architectural planning, structural design, soil investigation, MEP coordination, construction, project management consultancy, and structural audit. Our approach is based on one clear principle: a building should be properly planned before it is built.",
+    "Wano Projects is an engineering-driven design and construction company working across residential and renovation projects. We provide integrated services including architectural planning, structural design, soil investigation, MEP coordination, construction, project management consultancy, and structural audit. Our approach is based on one clear principle: a building should be properly planned before it is built.",
   ],
   projectsHeading: "Projects",
   projects: [
@@ -126,87 +94,40 @@ export const home = {
       detail:
         "First floor swimming pool, second floor home theatre, villa-type building. ₹1 Cr project.",
       location: "Tenkasi",
-      image: tenkasi,
+      image: "/images/projects/tenkasi.jpg",
     },
     {
       title: "Twin Villa Sivagangai",
       detail:
         "Budget house by cost-benefit analysis — structurally safe building.",
       location: "Sivagangai",
-      image: sivagangai,
+      image: "/images/projects/sivagangai.jpg",
     },
     {
       title: "Vellore G+2",
       detail: "Farm house with gazebo at terrace.",
       location: "Vellore",
-      image: vellore,
+      image: "/images/projects/vellore.jpg",
     },
     {
       title: "Chennai Paruthipattu Renovation",
       detail:
         "KV Kendra Vihar — old building structural safety renovation.",
       location: "Chennai",
-      image: chennai,
+      image: "/images/projects/chennai.jpg",
     },
   ],
   warrantyHeading: "Built with Responsibility",
   warrantyBody:
     "We treat every project as an important investment and focus on delivering with accountability and technical discipline.",
   warranties: [
-    {
-      label: "Structural Warranty",
-      value: "15",
-      unit: "Years",
-      detail: "Frame, slab, and load-bearing work — covered after handover.",
-    },
-    {
-      label: "Workmanship Warranty",
-      value: "1",
-      unit: "Year",
-      detail: "On-site finish and execution quality — we stand behind the build.",
-    },
+    { label: "Structural Warranty", value: "15 Years" },
+    { label: "Workmanship Warranty", value: "1 Year" },
   ],
   closingHeading: "Built with Planning, Precision, and Responsibility",
   closingBody:
     "Wano Projects focuses on doing the right steps in the right order. Our goal is to deliver buildings that are safe, practical, and reliable for long-term use.",
-  teamHeading: "Our Core Team",
-  teamBody:
-    "Engineers, architects, and site leads who keep planning, structure, and execution aligned from first drawing to handover.",
 };
-
-export const team = [
-  {
-    name: "Adhikaraneshan A",
-    role: "Chief Structural Engineer",
-    image: "/images/team/adhikaraneshan.png",
-    bio: "Smart India Hackathon Winner and EDII-trained leader, Adhikaraneshan brings a strong foundation in research-driven structural engineering. With extensive experience in R&D, he specializes in optimizing and innovating foundation systems, as well as designing RCC, steel, composite, and PT structures. As head of structural R&D, he provides cost-efficient, practical solutions for complex and custom structural systems.",
-  },
-  {
-    name: "Gogulan R",
-    role: "Principal Architect",
-    image: "/images/team/gogulan.png",
-    bio: "An award-winning architect, known for innovative and creative designs that blend aesthetics with functionality. He leads architectural planning, ensuring smooth integration with structural and MEP systems, and focuses on creating high-quality, user-centric spaces while driving design excellence and operational efficiency.",
-  },
- 
-  {
-    name: "ER. Mutharasan M",
-    role: "Lead MEP Engineer",
-    image: "/images/team/mutharasan.png",
-    bio: "An internationally experienced MEP engineer with a strong background in high-rise building projects, having worked abroad on large-scale developments. He excels in managing integrated MEP systems, overseeing site execution, and coordinating with structural and architectural teams to ensure technical reliability, safety compliance, and operational efficiency across all service systems in complex buildings.",
-  },
-  {
-    name: "Praveenkumar KR",
-    role: "Lead Engineer Civil & Structural",
-    image: "/images/team/praveenkumar.png",
-    bio: "A skilled civil engineer and expert in detailed execution and project management. He ensures seamless implementation of construction plans, overseeing site activities, managing estimations, and ensuring adherence to the highest standards of quality, safety, and project timelines.",
-  },
-  {
-    name: "Sureshseeman R",
-    role: "Lead Engineer Civil & Structural",
-    image: "/images/team/sureshseeman.png",
-    bio: "With significant experience in high-rise projects, Sureshseeman coordinates civil works and ensures alignment with structural designs. He plays a crucial role in managing on-site activities, reviewing drawings, and enforcing safety and quality standards to ensure efficient project execution and successful delivery.",
-  },
-];
 
 export const gallery = [
   {
@@ -256,12 +177,14 @@ export const aboutPage = {
   },
   different: {
     heading: "What Makes Wano Projects Different",
-    intro: "Professional engineering made practical and accessible at local-market cost",
+    intro: "Our key strengths are:",
     points: [
-      "Practical Local-Market Pricing",
-      "Cost Overrun Risk Control",
-      "Cost-Benefit Analysis Before Execution",
-      "Checklist-Based Execution",
+      "Complete workflow from planning to handover",
+      "No skipped engineering stages",
+      "Checklist-based execution at every stage",
+      "Early coordination of architectural, structural, and service design",
+      "Cost-overrun control through proper planning",
+      "Practical local-market pricing",
       "Structured responsibility and warranty support",
     ],
   },
@@ -941,8 +864,3 @@ export const faqSections: {
     ],
   },
 ];
-
-
-export const VIDEO_HELPER = {
-  ABOUT_PAGE: "/video/about.mp4",
-} as const;
