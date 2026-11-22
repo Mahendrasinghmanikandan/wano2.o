@@ -39,7 +39,7 @@ export default function MediaImage({
     <figure
       className={`media-frame media-${hover} group relative overflow-hidden border border-line bg-surface ${frameClassName}`}
     >
-      <div className="media-stage relative">
+      <div className="media-stage">
         {fill ? (
           <Image
             {...rest}

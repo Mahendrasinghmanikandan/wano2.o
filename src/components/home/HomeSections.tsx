@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Aos, FadeIn, SectionHeading } from "@/components/ui/Motion";
 import MediaImage from "@/components/ui/MediaImage";
 import { outfit } from "@/config/font.config";
-import { gallery, home, servicesNav, team } from "@/content/site";
+import { gallery, home, servicesNav } from "@/content/site";
 
 export function BelowHeroCopy() {
   return (
@@ -149,43 +149,6 @@ export function WarrantySection() {
             </Aos>
           ))}
         </div>
-      </div>
-    </section>
-  );
-}
-
-export function TeamSection() {
-  return (
-    <section id="team" className="section-pad border-y border-line bg-surface/60 py-24">
-      <SectionHeading
-        eyebrow="People"
-        title={home.teamHeading}
-        body={home.teamBody}
-      />
-      <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {team.map((member, i) => (
-          <Aos key={member.name} delay={i * 0.05} direction={i % 2 === 0 ? "up" : "down"}>
-            <article className="flex h-full flex-col overflow-hidden border border-line bg-background transition hover:border-accent/40">
-              <MediaImage
-                src={member.image}
-                alt={member.name}
-                fill
-                sizes="(max-width: 768px) 100vw, 33vw"
-                frameClassName="aspect-[4/5] border-0"
-                hover="glow-frame"
-              />
-              <div className="flex flex-1 flex-col px-6 py-5">
-                <p className="text-xs tracking-[0.22em] text-steel uppercase">
-                  {member.role}
-                </p>
-                <h3 className={`mt-2 text-xl font-semibold text-foreground ${outfit.className}`}>
-                  {member.name}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted">{member.bio}</p>
-              </div>
-            </article>
-          </Aos>
-        ))}
       </div>
     </section>
   );

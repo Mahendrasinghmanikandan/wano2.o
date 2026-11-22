@@ -21,7 +21,6 @@ export const navLinks = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Projects", href: "/#projects" },
-  { label: "Team", href: "/#team" },
   { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ];
@@ -128,43 +127,7 @@ export const home = {
   closingHeading: "Built with Planning, Precision, and Responsibility",
   closingBody:
     "Wano Projects focuses on doing the right steps in the right order. Our goal is to deliver buildings that are safe, practical, and reliable for long-term use.",
-  teamHeading: "Our Team",
-  teamBody:
-    "Engineers, architects, and site leads who keep planning, structure, and execution aligned from first drawing to handover.",
 };
-
-export const team = [
-  {
-    name: "Gogulan R",
-    role: "Principal Architect",
-    image: "/images/team/gogulan.jpg",
-    bio: "An award-winning architect, known for innovative and creative designs that blend aesthetics with functionality. He leads architectural planning, ensuring smooth integration with structural and MEP systems, and focuses on creating high-quality, user-centric spaces while driving design excellence and operational efficiency.",
-  },
-  {
-    name: "Adhikaraneshan A",
-    role: "Chief Structural Engineer",
-    image: "/images/team/adhikaraneshan.jpg",
-    bio: "Smart India Hackathon Winner and EDII-trained leader, Adhikaraneshan brings a strong foundation in research-driven structural engineering. With extensive experience in R&D, he specializes in optimizing and innovating foundation systems, as well as designing RCC, steel, composite, and PT structures. As head of structural R&D, he provides cost-efficient, practical solutions for complex and custom structural systems.",
-  },
-  {
-    name: "ER. Mutharasan M",
-    role: "Lead MEP Engineer",
-    image: "/images/team/mutharasan.jpg",
-    bio: "An internationally experienced MEP engineer with a strong background in high-rise building projects, having worked abroad on large-scale developments. He excels in managing integrated MEP systems, overseeing site execution, and coordinating with structural and architectural teams to ensure technical reliability, safety compliance, and operational efficiency across all service systems in complex buildings.",
-  },
-  {
-    name: "Praveenkumar KR",
-    role: "Lead Engineer Civil & Structural",
-    image: "/images/team/praveenkumar.jpg",
-    bio: "A skilled civil engineer and expert in detailed execution and project management. He ensures seamless implementation of construction plans, overseeing site activities, managing estimations, and ensuring adherence to the highest standards of quality, safety, and project timelines.",
-  },
-  {
-    name: "Sureshseeman R",
-    role: "Lead Engineer Civil & Structural",
-    image: "/images/team/sureshseeman.jpg",
-    bio: "With significant experience in high-rise projects, Sureshseeman coordinates civil works and ensures alignment with structural designs. He plays a crucial role in managing on-site activities, reviewing drawings, and enforcing safety and quality standards to ensure efficient project execution and successful delivery.",
-  },
-];
 
 export const gallery = [
   {
